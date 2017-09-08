@@ -1,0 +1,16 @@
+web知识整理：
+1.web启动
+  顺序：ServletContext，filter（多个filter的执行顺序按照web.xml里配置的顺序）
+2.服务器响应请求
+  顺序：ServletRequest创建了...      ----------》qequest请求
+        dofilter                     ----------》拦截器中的doFilter
+         servlet                     ----------》chain.doFilter中指向的操作（如servlet或者另一个拦截器等）
+        servlet2                     ----------》执行servlet中的操作
+        getsession                   ----------》创建session
+       服务器已经存在这个 session，sessionId：FABEF21CF6C6FFA08A04E410637A8A85         ----------》执行session中的操作
+          filter end                 ----------》chain.doFilter结束
+        ServletRequest销毁了...      ----------》request请求结束
+          HttpSession销毁了...       ----------》session在设定的时间销毁
+        ServletRequest创建了...      ----------》ServletContext销毁了
+
+
